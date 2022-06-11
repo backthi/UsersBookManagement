@@ -2,12 +2,6 @@ const userSchema = require('../model/user')
 
 // Create and Save a new User
 exports.create = async (req, res) => {
-    // // Validate request
-    // if(!req.body.content) {
-    //     return res.status(400).send({
-    //         message: "User content can not be empty"
-    //     });
-    // }
 
     // Create a User
     const userData = new userSchema(
@@ -54,16 +48,75 @@ exports.findAll = async (req, res) => {
 };
 
 // Find a single User with a userID
-exports.findOne = (req, res) => {
-
+exports.findOne = async (req, res) => {
+    await userSchema.findById(req.params.userId)
+    // res.json(single_user);
+    // console.log("UserID: " + req.params.userId)
+    .then(oneUser => {
+        if(!oneUser) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });            
+        }
+        res.json(oneUser);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving user with id " + req.params.userId
+        });
+    });
 };
 
 // Update a User dats identified by the userId in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
 
+    // Find User and update it with the request body
+    await userSchema.findByIdAndUpdate(req.params.userId, {
+        name: req.body.name,
+            role: req.body.role,
+            date_joined: req.body.date_joined
+    }, {new: true})
+    .then(updateUser => {
+        if(!updateUser) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });
+        }
+        res.json(updateUser);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating User with id " + req.params.userId
+        });
+    });
 };
 
 // Delete a User with the specified userId in the request
-exports.delete = (req, res) => {
-
+exports.delete = async (req, res) => {
+    await userSchema.findByIdAndRemove(req.params.userId)
+    .then(delUser => {
+        if(!delUser) {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.userId
+            });
+        }
+        res.send({message: "User deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.userId
+            });                
+        }
+        return res.status(500).send({
+            message: "Could not delete note with id " + req.params.userId
+        });
+    });
 };
