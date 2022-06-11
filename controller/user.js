@@ -4,34 +4,34 @@ const userSchema = require('../model/user')
 exports.create = async (req, res) => {
 
     // Create a User
-    const userData = new userSchema(
-        {
-            name: req.body.name,
-            role: req.body.role,
-            date_joined: req.body.date_joined
-        })
-        try{
-            const userData1 =  await userData.save() 
-            res.json(userData1)
-        }catch(err){
-            res.send('Error ' + err)
-        }
     // const userData = new userSchema(
-    // {
-    //     name: req.body.name,
-    //     role: req.body.role,
-    //     date_joined: req.body.date_joined
-    // });
+    //     {
+    //         name: req.body.name,
+    //         role: req.body.role,
+    //         date_joined: req.body.date_joined
+    //     })
+    //     try{
+    //         const userData1 =  await userData.save() 
+    //         res.json(userData1)
+    //     }catch(err){
+    //         res.send('Error ' + err)
+    //     }
+    const userData = new userSchema(
+    {
+        name: req.body.name,
+        role: req.body.role,
+        date_joined: req.body.date_joined
+    });
 
-    // // Save User in the database
-    // userData.save()
-    // .then(data => {
-    //     res.send(data);
-    // }).catch(err => {
-    //     res.status(500).send({
-    //         message: err.message || "Some error occurred while creating the User."
-    //     });
-    // });
+    // Save User in the database
+    await userData.save()
+    .then(data => {
+        res.json(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while creating the User."
+        });
+    });
 };
 
 // Retrieve and return all user from the database.

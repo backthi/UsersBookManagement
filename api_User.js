@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userRouter = require('./routes/user')
+// const bookRouter = require('./routes/books');
 const dbConfig = require('./config/database.config.js');
 require("dotenv/config");
 const app = express();
@@ -21,6 +22,7 @@ mongoose.connect(dbConfig.url,connectionParams)
 
 
 app.use('/user',userRouter)
+// app.use('/books',bookRouter)
 
 
 
