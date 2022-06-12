@@ -5,7 +5,7 @@ const bookCont = require('../controller/books')
 
 
 // Add a new Book
-routesBook.post('/', bookCont.create);
+routesBook.post('/', bookCont.add);
 
 // Retrieve all Books
 routesBook.get('/', bookCont.findAll);

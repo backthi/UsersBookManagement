@@ -1,7 +1,7 @@
 const bookSchema = require('../model/books')
 
 // Add and Save a new Book
-exports.create = async (req, res) => {
+exports.add = async (req, res) => {
 
     //Add a Book Details
     const bookData = new bookSchema(

@@ -1,6 +1,6 @@
 const express = require('express')
 const routes = express.Router()
-const userSchema = require('../model/user')
+const user_Schema = require('../model/user')
 const userCont = require('../controller/user')
 
 // routes.get('/', async(req,res) => {

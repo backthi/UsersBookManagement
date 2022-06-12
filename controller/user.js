@@ -19,6 +19,7 @@ exports.create = async (req, res) => {
     const userData = new userSchema(
     {
         name: req.body.name,
+        emailId: req.body.emailId,
         role: req.body.role,
         date_joined: req.body.date_joined
     });
@@ -77,8 +78,9 @@ exports.update = async (req, res) => {
     // Find User and update it with the request body
     await userSchema.findByIdAndUpdate(req.params.userId, {
         name: req.body.name,
-            role: req.body.role,
-            date_joined: req.body.date_joined
+        emailId: req.body.emailId,
+        role: req.body.role,
+        date_joined: req.body.date_joined
     }, {new: true})
     .then(updateUser => {
         if(!updateUser) {
