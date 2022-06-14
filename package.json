@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon api_Book.js",
-    "start": "nodemon api_User.js"
+    "test": "echo Backend_Testing",
+    "start": "nodemon service.js"
   },
   "repository": {
     "type": "git",
